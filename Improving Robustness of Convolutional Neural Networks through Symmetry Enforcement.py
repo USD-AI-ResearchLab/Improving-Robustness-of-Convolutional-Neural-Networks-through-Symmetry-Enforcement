@@ -1,3 +1,5 @@
+# Import necessary libraries
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -10,6 +12,9 @@ import matplotlib.pyplot as plt
 
 
 # --- Custom Rotate Filter Function ---
+# Function to rotate a filter tensor by a specified angle and it uses affine transformation with grid sampling
+# Input: filter - input filter tensor, angle - rotation angle, device - device for computation
+# Output: rotated_filter - rotated filter tensor
 def rotate_filter(filter, angle, device):
     # Calculate rotation matrix
     theta = torch.tensor([
@@ -36,7 +41,11 @@ def rotate_filter(filter, angle, device):
     return rotated_filter.view(N, C, H, W)
 
 
-# --- RotEquivConv2d Definition ---
+
+# --- Custom convolutional layer with rotational equivariance ---
+# Input: in_channels - input channels, out_channels - output channels,
+#        kernel_size - size of the convolutional kernel, num_rotations - number of rotations
+# Output: Convolutional layer with rotational equivariance
 class RotEquivConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, num_rotations=8):
         super(RotEquivConv2d, self).__init__()
@@ -54,7 +63,10 @@ class RotEquivConv2d(nn.Module):
         output = torch.cat(rotated_outputs, dim=1)
         return output.mean(dim=1)
 
-# --- ScaleEquivConv2d Definition ---
+# ---    Custom convolutional layer with scale equivariance ---
+    # Input: in_channels - input channels, out_channels - output channels,
+    #        kernel_size - size of the convolutional kernel, scales - list of scales
+    # Output: Convolutional layer with scale equivariance
 class ScaleEquivConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, scales=[1.0, 0.8, 0.6], padding=0):
         super(ScaleEquivConv2d, self).__init__()
@@ -92,9 +104,9 @@ class ScaleEquivConv2d(nn.Module):
         
         
         
-# --- MyModel Definition ---
-
-
+# --- Custom neural network model combining rotational and scale equivariant layers ---
+# Input: num_classes - number of output classes, device - device for computation
+# Output: Neural network model
 class MyModel(nn.Module):
     def __init__(self, num_classes=100, device='cuda'):
         super(MyModel, self).__init__()
@@ -144,7 +156,10 @@ class MyModel(nn.Module):
 
 
 
-
+# Function to train the model on the training dataset
+# Input: model - neural network model, trainloader - training data loader,
+#                criterion - loss function, optimizer - optimization algorithm, device - device for computation
+# Output: Average training loss
 def train(model, trainloader, criterion, optimizer, device):
     model.train()
     running_loss = 0.0
@@ -162,6 +177,10 @@ def train(model, trainloader, criterion, optimizer, device):
         running_loss += loss.item()
     return running_loss / len(trainloader)
 
+
+# Function to test the model on the test dataset
+# Input: model - neural network model, testloader - test data loader, device - device for computation
+# Output: Model accuracy on the test dataset
 def test(model, testloader, device):
     model.eval()
     correct = 0
@@ -181,7 +200,7 @@ def test(model, testloader, device):
     
     
     
-
+# Main function to set up and run the training process
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
