@@ -1,0 +1,71 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+*.pyproj
+__pycache__
+.env
+
+# Virtual environments
+venv/
+env/
+*.env/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Test coverage
+htmlcov/
+.coverage
+.tox/
+
+# Translations
+*.mo
+*.pot
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Icon?
+ehthumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Temporary files
+*.bak
+*.swp
+*~
+
+# Data Files
+data/
