@@ -1,0 +1,15 @@
+name: Sync Improving-Robustness-of-Convolutional-Neural-Networks-through-Symmetry-Enforcement from Upstream
+
+on:
+  schedule:
+    - cron: "10 9 * * *"   # daily at 09:10 UTC
+  workflow_dispatch:
+
+jobs:
+  sync:
+    uses: 2ai-lab/.github/.github/workflows/reusable-sync-upstream.yml@main
+    with:
+      upstream_url: https://github.com/2ai-lab/Improving-Robustness-of-Convolutional-Neural-Networks-through-Symmetry-Enforcement.git
+      mode: "push"   # change to "pr" if branch protected
+    secrets:
+      # push_token: ${{ secrets.PAT }}   # enable if private repo / special permissions
